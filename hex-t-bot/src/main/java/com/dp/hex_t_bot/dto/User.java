@@ -1,0 +1,144 @@
+package com.dp.hex_t_bot.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+
+@NoArgsConstructor
+@Getter
+@Setter
+public class User {
+    private static final String ID_FIELD = "id";
+    private static final String FIRST_NAME_FIELD = "first_name";
+    private static final String IS_BOT_FIELD = "is_bot";
+    private static final String LAST_NAME_FIELD = "last_name";
+    private static final String USERNAME_FIELD = "username";
+    private static final String LANGUAGE_CODE_FIELD = "language_code";
+    private static final String CAN_JOIN_GROUPS_FIELD = "can_join_groups";
+    private static final String CAN_READ_ALL_GROUP_MESSAGES_FIELD = "can_read_all_group_messages";
+    private static final String SUPPORT_INLINE_QUERIES_FIELD = "supports_inline_queries";
+    private static final String IS_PREMIUM_FIELD = "is_premium";
+    private static final String ADDED_TO_ATTACHMENT_MENU_FIELD = "added_to_attachment_menu";
+    private static final String CAN_CONNECT_TO_BUSINESS_FIELD = "can_connect_to_business";
+    private static final String HAS_MAIN_WEB_APP_FIELD = "has_main_web_app";
+    private static final String HAS_TOPICS_ENABLED_FIELD = "has_topics_enabled";
+    private static final String ALLOWS_USERS_TO_CREATE_TOPICS_FIELD = "allows_users_to_create_topics";
+    private static final String CAN_MANAGE_BOTS_FIELD = "can_manage_bots";
+    private static final String SUPPORTS_GUEST_QUERIES_FIELD = "supports_guest_queries";
+    private static final String SUPPORTS_JOIN_REQUEST_QUERIES_FIELD = "supports_join_request_queries";
+
+    @JsonProperty(ID_FIELD)
+    @NonNull
+    private Long id;
+    /**
+     * User‘s or bot’s first name
+     */
+    @JsonProperty(FIRST_NAME_FIELD)
+    @NonNull
+    private String firstName;
+    /**
+     * True, if this user is a bot
+     */
+    @JsonProperty(IS_BOT_FIELD)
+    @NonNull
+    private Boolean isBot;
+    /**
+     * Optional.
+     * User‘s or bot’s last name
+     */
+    @JsonProperty(LAST_NAME_FIELD)
+    private String lastName;
+    /**
+     * Optional.
+     * User‘s or bot’s username
+     */
+    @JsonProperty(USERNAME_FIELD)
+    private String userName;
+    /**
+     * Optional.
+     * IETF language tag of the user's language
+     */
+    @JsonProperty(LANGUAGE_CODE_FIELD)
+    private String languageCode;
+    /**
+     * Optional.
+     * True, if the bot can be invited to groups. Returned only in getMe.
+     */
+    @JsonProperty(CAN_JOIN_GROUPS_FIELD)
+    private Boolean canJoinGroups;
+    /**
+     * Optional.
+     * True, if privacy mode is disabled for the bot. Returned only in getMe.
+     */
+    @JsonProperty(CAN_READ_ALL_GROUP_MESSAGES_FIELD)
+    private Boolean canReadAllGroupMessages;
+    /**
+     * Optional.
+     * True, if the bot supports inline queries. Returned only in getMe.
+     */
+    @JsonProperty(SUPPORT_INLINE_QUERIES_FIELD)
+    private Boolean supportInlineQueries;
+    /**
+     * Optional.
+     * True, if this user is a Telegram Premium user
+     */
+    @JsonProperty(IS_PREMIUM_FIELD)
+    private Boolean isPremium;
+    /**
+     * Optional.
+     * True, if this user added the bot to the attachment menu
+     */
+    @JsonProperty(ADDED_TO_ATTACHMENT_MENU_FIELD)
+    private Boolean addedToAttachmentMenu;
+    /**
+     * Optional.
+     * True, if the bot can be connected to a Telegram Business account to receive its messages.
+     * Returned only in getMe.
+     */
+    @JsonProperty(CAN_CONNECT_TO_BUSINESS_FIELD)
+    private Boolean canConnectToBusiness;
+    /**
+     * Optional.
+     * True, if the bot has a main Web App.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(HAS_MAIN_WEB_APP_FIELD)
+    private Boolean hasMainWebApp;
+    /**
+     * Optional.
+     * True, if the bot has forum topic mode enabled in private chats.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(HAS_TOPICS_ENABLED_FIELD)
+    private Boolean hasTopicsEnabled;
+    /**
+     * Optional.
+     * True, if the bot allows users to create and delete topics in private chats.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(ALLOWS_USERS_TO_CREATE_TOPICS_FIELD)
+    private Boolean allowsUsersToCreateTopics;
+    /**
+     * Optional.
+     * True, if other bots can be created to be controlled by the bot.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(CAN_MANAGE_BOTS_FIELD)
+    private Boolean canManageBots;
+    /**
+     * Optional.
+     * True, if the bot supports guest queries from chats it is not a member of.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(SUPPORTS_GUEST_QUERIES_FIELD)
+    private Boolean supportsGuestQueries;
+    /**
+     * Optional.
+     * True, if the bot supports join request queries and can be assigned to process them.
+     * @apiNote Returned only in getMe.
+     */
+    @JsonProperty(SUPPORTS_JOIN_REQUEST_QUERIES_FIELD)
+    private Boolean supportsJoinRequestQueries;
+}

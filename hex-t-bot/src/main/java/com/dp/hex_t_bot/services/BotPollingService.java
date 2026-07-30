@@ -8,6 +8,6 @@ public class BotPollingService {
 
     @Scheduled(fixedDelay = 2000) //позволяет добавлять некоторые методы, каждые 2000мс вызов
     public void poll() {
-        System.out.println("poll run");
+        System.out.println("poll run 2");
     }
 }
