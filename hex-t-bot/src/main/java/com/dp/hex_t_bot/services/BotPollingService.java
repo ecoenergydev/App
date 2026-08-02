@@ -1,6 +1,9 @@
 package com.dp.hex_t_bot.services;
 
 
+import com.dp.hex_t_bot.dto.Message;
+import com.dp.hex_t_bot.dto.ResponseMessage;
+import com.dp.hex_t_bot.dto.Update;
 import com.dp.hex_t_bot.dto.UpdateResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,17 +21,30 @@ public class BotPollingService {
     @Scheduled(fixedDelay = 2000) // Каждые 2 секунды
     public void poll() {
         try {
-            UpdateResponse response = tgClient.get()
+            UpdateResponse updates = tgClient.get()
                     .uri("/getUpdates") // Исправлено: /getUpdates (во множественном числе)
                     .retrieve()
                     .body(UpdateResponse.class);
 
-            log.info("Received updates: {}", response);
+            log.info("Received updates: {}", updates);
 
-            if (response != null && response.isOk()) {
+            if (updates != null && updates.isOk() && updates.getResult() != null) {
+                for (Update update : updates.getResult()) {
+                    var response = new ResponseMessage(
+                            update.getMessage().getChat().getId(),
+                            "Response: " + update.getMessage().getText()
+                    );
+                    //var res = tgClient.postForEntity("/sendMessage", response, Message.class);
+                    Message res = tgClient.post()
+                            .uri("/sendMessage")
+                            .body(response) // или Map.of(...)
+                            .retrieve()
+                            .body(Message.class);
+                    System.out.println(res);
+                }
                 // TODO: Обработать полученные обновления
                 log.debug("Updates count: {}",
-                        response.getResult() != null ? response.getResult().size() : 0);
+                        updates.getResult() != null ? updates.getResult().size() : 0);
             }
 
         } catch (Exception e) {
