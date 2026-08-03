@@ -7,14 +7,19 @@ import com.dp.hex_t_bot.dto.Update;
 import com.dp.hex_t_bot.dto.UpdateResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class BotPollingService {
+    private static final AtomicInteger offset = new AtomicInteger();
 
     private final RestClient tgClient;
 
@@ -22,7 +27,7 @@ public class BotPollingService {
     public void poll() {
         try {
             UpdateResponse updates = tgClient.get()
-                    .uri("/getUpdates") // Исправлено: /getUpdates (во множественном числе)
+                    .uri("/getUpdates?offset=" + offset.get())
                     .retrieve()
                     .body(UpdateResponse.class);
 
@@ -35,12 +40,14 @@ public class BotPollingService {
                             "Response: " + update.getMessage().getText()
                     );
                     //var res = tgClient.postForEntity("/sendMessage", response, Message.class);
-                    Message res = tgClient.post()
+                    ResponseEntity<Message> res = tgClient.post()
                             .uri("/sendMessage")
-                            .body(response) // или Map.of(...)
+                            .body(response)
                             .retrieve()
-                            .body(Message.class);
-                    System.out.println(res);
+                            .toEntity(Message.class);
+                    if (res.getStatusCode() == HttpStatusCode.valueOf(200)) {
+                        offset.set(update.getUpdateId() + 1);
+                    }
                 }
                 // TODO: Обработать полученные обновления
                 log.debug("Updates count: {}",
