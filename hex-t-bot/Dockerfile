@@ -1,33 +1,29 @@
-# Используем образ Gradle для сборки
+# Этап сборки
 FROM gradle:8.10-jdk17 AS build
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем только необходимые файлы для кэширования зависимостей
-COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
+# Копируем файлы из подпапки hex-t-bot
+COPY hex-t-bot/build.gradle hex-t-bot/settings.gradle ./
+COPY hex-t-bot/gradle ./gradle
 
-# Скачиваем зависимости (этот слой будет закэширован)
+# Загружаем зависимости
 RUN gradle build --no-daemon --stacktrace || return 0
 
 # Копируем исходный код
-COPY src ./src
+COPY hex-t-bot/src ./src
 
-# Собираем проект
+# Собираем приложение
 RUN gradle build --no-daemon --stacktrace
 
-# Используем минимальный образ для запуска (который есть в докер)
+# Этап запуска
 FROM eclipse-temurin:17-jdk-alpine
 
-# Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Копируем собранный JAR-файл из предыдущего этапа
+# Копируем JAR из этапа сборки
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Открываем порт (обычно 8080 для Spring Boot)
 EXPOSE 8080
 
-# Команда для запуска приложения
 ENTRYPOINT ["java", "-jar", "app.jar"]
