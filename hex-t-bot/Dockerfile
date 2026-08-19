@@ -18,7 +18,7 @@ COPY src ./src
 RUN gradle build --no-daemon --stacktrace
 
 # Используем минимальный образ для запуска
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-alpine
 
 # Устанавливаем рабочую директорию
 WORKDIR /app
