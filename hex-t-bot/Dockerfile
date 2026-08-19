@@ -17,7 +17,7 @@ COPY src ./src
 RUN gradle build --no-daemon --stacktrace -x test
 
 # Этап запуска
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 
 WORKDIR /app
 
