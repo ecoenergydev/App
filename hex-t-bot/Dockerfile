@@ -4,7 +4,7 @@ FROM gradle:8.10-jdk17 AS build
 WORKDIR /app
 
 # Копируем файлы (уже внутри hex-t-bot)
-COPY build.gradle settings.gradle ./
+COPY build.gradle.kts settings.gradle.kts ./
 COPY gradle ./gradle
 
 # Загружаем зависимости
