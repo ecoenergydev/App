@@ -3,15 +3,15 @@ FROM gradle:8.10-jdk17 AS build
 
 WORKDIR /app
 
-# Копируем файлы из подпапки hex-t-bot
-COPY hex-t-bot/build.gradle hex-t-bot/settings.gradle ./
-COPY hex-t-bot/gradle ./gradle
+# Копируем файлы (уже внутри hex-t-bot)
+COPY build.gradle settings.gradle ./
+COPY gradle ./gradle
 
 # Загружаем зависимости
 RUN gradle build --no-daemon --stacktrace || return 0
 
 # Копируем исходный код
-COPY hex-t-bot/src ./src
+COPY src ./src
 
 # Собираем приложение
 RUN gradle build --no-daemon --stacktrace
