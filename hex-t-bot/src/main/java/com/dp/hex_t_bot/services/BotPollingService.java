@@ -72,7 +72,7 @@ public class BotPollingService {
                                                 "O2 = %.2f%%\n" +
                                                 "NOx (исходный) = %.2f ppm\n" +
                                                 "━━━━━━━━━━━━━━━━━━━\n" +
-                                                "NOx (к 1.4) = %.2f ppm",
+                                                "NOx (к 1.4) = %.2f мг/нм3",
                                         o2, noxPpm, noxCorrected
                                 ),
                                 chatId
