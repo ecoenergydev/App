@@ -216,7 +216,7 @@ public class BotPollingService {
                             continue;
                         }
 
-                        double noxCorrected = noxPpm * (17.45 / (21 - o2));
+                        double noxCorrected = 2.05 * noxPpm * (21 / (21 - o2)) / 1.4;
 
                         tgClient.sendMessage(
                                 String.format(
