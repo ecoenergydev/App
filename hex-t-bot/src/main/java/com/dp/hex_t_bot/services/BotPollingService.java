@@ -114,7 +114,7 @@
 //                    }
 //
 //                    // Формула приведения NOx к 1.4 (O2 = 1.4%)
-//                    double noxCorrected = noxPpm * (17.45 / (21 - o2));
+//                    double noxCorrected = 2.05 * noxPpm * (17.45 / (21 - o2)) / 1.4;
 //
 //                    tgClient.sendMessage(
 //                            String.format(
